@@ -27,6 +27,9 @@ public class DonationService {
     @Autowired
     private ReceiverRepository receiverRepository;
 
+    /**
+     * @return List<Donation>
+     */
     public List<Donation> getAllDonations() {
         try {
             return donationRepository.findAll();
@@ -36,6 +39,10 @@ public class DonationService {
         }
     }
 
+    /**
+     * @param id
+     * @return Optional<Donation>
+     */
     public Optional<Donation> getDonationById(Long id) {
         try {
             return donationRepository.findById(id);
@@ -45,6 +52,10 @@ public class DonationService {
         }
     }
 
+    /**
+     * @param donation
+     * @return Donation
+     */
     public Donation addDonation(Donation donation) {
         Optional<Donor> donorOptional = donorRepository.findById(donation.getDonor().getId());
 
@@ -88,6 +99,9 @@ public class DonationService {
         return donationRepository.save(donation);
     }
 
+    /**
+     * @param id
+     */
     public void deleteDonation(Long id) {
         try {
             donationRepository.deleteById(id);
@@ -96,6 +110,9 @@ public class DonationService {
         }
     }
 
+    /**
+     * @return List<Map<String, Object>>
+     */
     public List<Map<String, Object>> getDonationsGroupedByDonorId() {
         return donationRepository.findDonationsGroupedByDonorId();
     }
