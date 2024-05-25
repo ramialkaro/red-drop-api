@@ -43,8 +43,6 @@ public class Receiver {
     @Column(nullable = false)
     private boolean consumesAlcohol;
 
-    // Getters and setters
-
     public Long getId() {
         return id;
     }

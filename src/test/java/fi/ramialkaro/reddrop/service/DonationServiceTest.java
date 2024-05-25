@@ -17,6 +17,8 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +72,26 @@ class DonationServiceTest {
     @Test
     void testGetAllDonations() {
         List<Donation> donations = Arrays.asList(donation);
+
         when(donationRepository.findAll()).thenReturn(donations);
 
         List<Donation> result = donationService.getAllDonations();
 
         assertEquals(1, result.size());
         assertEquals(donations, result);
+
+        verify(donationRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testGetAllDonations_ErrorHandling() {
+        when(donationRepository.findAll()).thenThrow(new RuntimeException("Repository error"));
+
+        List<Donation> result = donationService.getAllDonations();
+
+        assertTrue(result.isEmpty());
+
+        verify(donationRepository, times(1)).findAll();
     }
 
     @Test
@@ -86,6 +102,25 @@ class DonationServiceTest {
 
         assertTrue(result.isPresent());
         assertEquals(donation, result.get());
+    }
+
+    @Test
+    void testGetDonationById_Success() {
+        when(donationRepository.findById(1L)).thenReturn(Optional.of(donation));
+
+        Optional<Donation> result = donationService.getDonationById(1L);
+
+        assertTrue(result.isPresent());
+        assertEquals(donation, result.get());
+    }
+
+    @Test
+    void testGetDonationById_NotFound() {
+        when(donationRepository.findById(1L)).thenThrow(new DonationNotFoundException("Donation with id 1 not found"));
+
+        Optional<Donation> result = donationService.getDonationById(1L);
+
+        assertFalse(result.isPresent());
     }
 
     @Test
@@ -124,7 +159,6 @@ class DonationServiceTest {
 
     @Test
     void testAddDonation_ReceiverNotNull() {
-        // Ensuring the receiver is not null
         when(donorRepository.findById(1L)).thenReturn(Optional.of(donor));
         when(receiverRepository.findById(1L)).thenReturn(Optional.of(receiver));
         when(donationRepository.save(any(Donation.class))).thenReturn(donation);
@@ -137,7 +171,6 @@ class DonationServiceTest {
 
     @Test
     void testAddDonation_NoReceiver() {
-        // Setting receiver to null
         donation.setReceiver(null);
         when(donorRepository.findById(1L)).thenReturn(Optional.of(donor));
         when(donationRepository.save(any(Donation.class))).thenReturn(donation);
@@ -210,12 +243,26 @@ class DonationServiceTest {
     }
 
     @Test
-    void testDeleteDonation() {
+    void testDeleteDonation_Success() {
         doNothing().when(donationRepository).deleteById(1L);
 
         donationService.deleteDonation(1L);
 
         verify(donationRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void testDeleteDonation_ExceptionHandling() {
+        doThrow(new RuntimeException("Deletion error")).when(donationRepository).deleteById(1L);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(outContent));
+
+        donationService.deleteDonation(1L);
+
+        verify(donationRepository, times(1)).deleteById(1L);
+
+        assertTrue(outContent.toString().contains("Error deleting donation with id 1: Deletion error"));
     }
 
     @Test

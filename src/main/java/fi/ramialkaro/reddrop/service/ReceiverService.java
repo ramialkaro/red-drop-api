@@ -33,15 +33,12 @@ public class ReceiverService {
     }
 
     public Receiver createReceiver(Receiver receiver) {
-        // Fetch the associated user
         User user = userRepository.findById(receiver.getUser().getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Fetch the associated organization (if needed)
         Organization organization = organizationRepository.findById(receiver.getOrganization().getId())
                 .orElseThrow(() -> new RuntimeException("Organization not found"));
 
-        // Set the user and organization (if needed)
         receiver.setUser(user);
         receiver.setOrganization(organization);
 

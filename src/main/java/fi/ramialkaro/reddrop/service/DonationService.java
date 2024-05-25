@@ -1,5 +1,6 @@
 package fi.ramialkaro.reddrop.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,11 +28,21 @@ public class DonationService {
     private ReceiverRepository receiverRepository;
 
     public List<Donation> getAllDonations() {
-        return donationRepository.findAll();
+        try {
+            return donationRepository.findAll();
+        } catch (Exception e) {
+            System.err.println("Error fetching all donations: " + e.getMessage());
+            return Collections.emptyList();
+        }
     }
 
     public Optional<Donation> getDonationById(Long id) {
-        return donationRepository.findById(id);
+        try {
+            return donationRepository.findById(id);
+        } catch (Exception e) {
+            System.err.println("Error fetching donation with id " + id + ": " + e.getMessage());
+            return Optional.empty();
+        }
     }
 
     public Donation addDonation(Donation donation) {
@@ -78,7 +89,11 @@ public class DonationService {
     }
 
     public void deleteDonation(Long id) {
-        donationRepository.deleteById(id);
+        try {
+            donationRepository.deleteById(id);
+        } catch (Exception e) {
+            System.err.println("Error deleting donation with id " + id + ": " + e.getMessage());
+        }
     }
 
     public List<Map<String, Object>> getDonationsGroupedByDonorId() {
