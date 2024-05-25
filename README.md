@@ -1,7 +1,7 @@
 # Red Drop API
 
 [![Build Status](https://github.com/ramialkaro/red-drop-api/actions/workflows/maven.yml/badge.svg)](https://github.com/ramialkaro/red-drop-api/actions)
-[![Coverage Status](https://coveralls.io/repos/github/ramialkaro/red-drop-api/badge.svg?branch=main)](https://coveralls.io/github/ramialkaro/red-drop-api?branch=main)
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/ramialkaro/red-drop-api/main/.github/badges/jacoco.json)](https://github.com/ramialkaro/red-drop-api/actions/workflows/maven.yml)
 
 Red Drop API is a comprehensive donation application designed to facilitate blood and monetary donations. It provides RESTful endpoints for managing donors, receivers, donations, and organizations. This API is built using Spring Boot and supports both H2 database for local setup and PostgreSQL for production environments.
 
@@ -65,11 +65,24 @@ Red Drop API is a comprehensive donation application designed to facilitate bloo
 
 ### Docker Setup
 
-1. Make sure to setup Docker Engine locally https://docs.docker.com/engine/
-2. Run the following command to spin a instance
+To run the application using Docker, use the provided `docker-compose.yaml` file. This setup includes both the application and a PostgreSQL database.
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/ramialkaro/red-drop-api.git
+   cd red-drop-api
+   ```
+
+2. **Run Docker Compose:**
+
    ```bash
    docker-compose up
    ```
+
+3. **Access the application:**
+   - The API will be accessible at `http://localhost:8080`
+   - The PostgreSQL database will be accessible at `localhost:5432`
 
 ## API Documentation
 
