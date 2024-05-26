@@ -63,7 +63,7 @@ public class OrganizationControllerIntegrationTest {
                                 ServiceType.BLOOD_DONATION);
                 when(organizationService.getAllOrganizations()).thenReturn(Arrays.asList(organization1, organization2));
 
-                mockMvc.perform(MockMvcRequestBuilders.get("/api/organizations")
+                mockMvc.perform(MockMvcRequestBuilders.get("/organizations")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$[0].id").value(1L))
@@ -79,7 +79,7 @@ public class OrganizationControllerIntegrationTest {
                                 ServiceType.BLOOD_DONATION);
                 when(organizationService.getOrganizationById(1L)).thenReturn(Optional.of(organization));
 
-                mockMvc.perform(MockMvcRequestBuilders.get("/api/organizations/1")
+                mockMvc.perform(MockMvcRequestBuilders.get("/organizations/1")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.id").value(1L))
@@ -94,7 +94,7 @@ public class OrganizationControllerIntegrationTest {
                                 ServiceType.BLOOD_DONATION);
                 when(organizationService.createOrganization(organization)).thenReturn(organization);
 
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/organizations")
+                mockMvc.perform(MockMvcRequestBuilders.post("/organizations")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(organization)))
                                 .andExpect(status().isOk());
@@ -111,7 +111,7 @@ public class OrganizationControllerIntegrationTest {
                 when(organizationService.getOrganizationById(1L)).thenReturn(Optional.of(existingOrganization));
                 when(organizationService.createOrganization(existingOrganization)).thenReturn(updatedOrganization);
 
-                mockMvc.perform(MockMvcRequestBuilders.put("/api/organizations/1")
+                mockMvc.perform(MockMvcRequestBuilders.put("/organizations/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(updatedOrganization)))
                                 .andExpect(status().isOk())
@@ -126,7 +126,7 @@ public class OrganizationControllerIntegrationTest {
 
         @Test
         void testDeleteOrganization() throws Exception {
-                mockMvc.perform(MockMvcRequestBuilders.delete("/api/organizations/1")
+                mockMvc.perform(MockMvcRequestBuilders.delete("/organizations/1")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isNoContent());
         }
@@ -135,7 +135,7 @@ public class OrganizationControllerIntegrationTest {
         void testGetOrganizationByIdNotFound() throws Exception {
                 when(organizationService.getOrganizationById(1L)).thenReturn(Optional.empty());
 
-                mockMvc.perform(MockMvcRequestBuilders.get("/api/organizations/1")
+                mockMvc.perform(MockMvcRequestBuilders.get("/organizations/1")
                                 .contentType(MediaType.APPLICATION_JSON))
                                 .andExpect(status().isNotFound());
         }

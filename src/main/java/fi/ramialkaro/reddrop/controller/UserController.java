@@ -16,7 +16,7 @@ import fi.ramialkaro.reddrop.model.User;
 import fi.ramialkaro.reddrop.service.UserService;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired

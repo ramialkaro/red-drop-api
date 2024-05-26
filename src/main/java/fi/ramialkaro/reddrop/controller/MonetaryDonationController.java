@@ -16,7 +16,7 @@ import fi.ramialkaro.reddrop.model.MonetaryDonation;
 import fi.ramialkaro.reddrop.service.MonetaryDonationService;
 
 @RestController
-@RequestMapping("/api/monetary-donations")
+@RequestMapping("/monetary-donations")
 public class MonetaryDonationController {
 
     @Autowired

@@ -92,7 +92,7 @@ public class DonationControllerIntegrationTest {
 
     @Test
     public void getAllDonationsTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/donations")
+        mockMvc.perform(MockMvcRequestBuilders.get("/donations")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
@@ -111,7 +111,7 @@ public class DonationControllerIntegrationTest {
 
         when(donationService.getDonationById(1L)).thenReturn(Optional.of(donation));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/donations/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/donations/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -122,7 +122,7 @@ public class DonationControllerIntegrationTest {
     void testGetDonationById_DonationDoesNotExist() throws Exception {
         when(donationService.getDonationById(1L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/donations/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/donations/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -140,7 +140,7 @@ public class DonationControllerIntegrationTest {
 
         when(donationService.addDonation(donation)).thenReturn(donation);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/donations")
+        mockMvc.perform(MockMvcRequestBuilders.post("/donations")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(donation)))
                 .andExpect(status().isOk())
@@ -149,7 +149,7 @@ public class DonationControllerIntegrationTest {
 
     @Test
     void testDeleteDonation() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/donations/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/donations/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -160,7 +160,7 @@ public class DonationControllerIntegrationTest {
                 1L, "count", 2));
         when(donationService.getDonationsGroupedByDonorId()).thenReturn(groupedDonations);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/donations/groupedByDonor")
+        mockMvc.perform(MockMvcRequestBuilders.get("/donations/groupedByDonor")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

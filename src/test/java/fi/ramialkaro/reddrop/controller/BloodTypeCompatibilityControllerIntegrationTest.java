@@ -39,7 +39,7 @@ public class BloodTypeCompatibilityControllerIntegrationTest {
 
         when(compatibilityService.isCompatible(donorBloodType, receiverBloodType)).thenReturn(isCompatible);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/compatibility")
+        mockMvc.perform(MockMvcRequestBuilders.get("/compatibility")
                 .param("donorBloodType", donorBloodType.name())
                 .param("receiverBloodType", receiverBloodType.name())
                 .contentType(MediaType.APPLICATION_JSON))
@@ -57,7 +57,7 @@ public class BloodTypeCompatibilityControllerIntegrationTest {
 
         when(compatibilityService.isCompatible(donorBloodType, receiverBloodType)).thenReturn(isCompatible);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/compatibility")
+        mockMvc.perform(MockMvcRequestBuilders.get("/compatibility")
                 .param("donorBloodType", donorBloodType.name())
                 .param("receiverBloodType", receiverBloodType.name())
                 .contentType(MediaType.APPLICATION_JSON))

@@ -52,7 +52,7 @@ public class ReceiverControllerIntegrationTest {
 
     @Test
     public void getAllReceiversTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/receivers")
+        mockMvc.perform(MockMvcRequestBuilders.get("/receivers")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
@@ -62,7 +62,7 @@ public class ReceiverControllerIntegrationTest {
 
     @Test
     void testGetReceiverById_ReceiverExists() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/receivers/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/receivers/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ public class ReceiverControllerIntegrationTest {
     void testGetReceiverById_ReceiverDoesNotExist() throws Exception {
         when(receiverService.getReceiverById(3L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/receivers/3")
+        mockMvc.perform(MockMvcRequestBuilders.get("/receivers/3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

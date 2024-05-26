@@ -13,7 +13,7 @@ import fi.ramialkaro.reddrop.model.Donor;
 import fi.ramialkaro.reddrop.service.DonorService;
 
 @RestController
-@RequestMapping("/api/donors")
+@RequestMapping("/donors")
 public class DonorController {
     @Autowired
     private DonorService donorService;

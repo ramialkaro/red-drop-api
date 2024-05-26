@@ -62,7 +62,7 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void getAllUsersTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/users")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
@@ -72,7 +72,7 @@ public class UserControllerIntegrationTest {
 
     @Test
     void testGetUserById_UserExists() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/users/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -88,7 +88,7 @@ public class UserControllerIntegrationTest {
     void testGetUserById_UserDoesNotExist() throws Exception {
         when(userService.getUserById(3L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/users/3")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -98,7 +98,7 @@ public class UserControllerIntegrationTest {
         User user = createMockUser(1L, "tester", "tester", "test@tester.fi", "tester", "tester");
         when(userService.createUser(user)).thenReturn(user);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/users")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
@@ -106,7 +106,7 @@ public class UserControllerIntegrationTest {
 
     @Test
     void testDeleteUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/users/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }

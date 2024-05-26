@@ -60,7 +60,7 @@ public class MonetaryDonationControllerIntegrationTest {
         MonetaryDonation donation2 = createMockMonetaryDonation(2L, "Jane Doe", 150.0);
         when(monetaryDonationService.getAllMonetaryDonations()).thenReturn(Arrays.asList(donation1, donation2));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/monetary-donations")
+        mockMvc.perform(MockMvcRequestBuilders.get("/monetary-donations")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L))
@@ -75,7 +75,7 @@ public class MonetaryDonationControllerIntegrationTest {
         MonetaryDonation donation = createMockMonetaryDonation(1L, "John Doe", 100.0);
         when(monetaryDonationService.getMonetaryDonationById(1L)).thenReturn(Optional.of(donation));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/monetary-donations/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/monetary-donations/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
@@ -88,7 +88,7 @@ public class MonetaryDonationControllerIntegrationTest {
         MonetaryDonation donation = createMockMonetaryDonation(1L, "John Doe", 100.0);
         when(monetaryDonationService.createMonetaryDonation(donation)).thenReturn(donation);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/monetary-donations")
+        mockMvc.perform(MockMvcRequestBuilders.post("/monetary-donations")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(donation)))
                 .andExpect(status().isOk());
@@ -96,7 +96,7 @@ public class MonetaryDonationControllerIntegrationTest {
 
     @Test
     void testDeleteMonetaryDonation() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/monetary-donations/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/monetary-donations/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }

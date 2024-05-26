@@ -52,7 +52,7 @@ public class DonorControllerIntegrationTest {
 
     @Test
     public void getAllDonorsTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/donors")
+        mockMvc.perform(MockMvcRequestBuilders.get("/donors")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
@@ -62,7 +62,7 @@ public class DonorControllerIntegrationTest {
 
     @Test
     void testGetDonorById_DonorExists() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/donors/1")
+        mockMvc.perform(MockMvcRequestBuilders.get("/donors/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -73,7 +73,7 @@ public class DonorControllerIntegrationTest {
     void testGetDonorById_DonorDoesNotExist() throws Exception {
         when(donorService.getDonorById(3L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/donors/3")
+        mockMvc.perform(MockMvcRequestBuilders.get("/donors/3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
